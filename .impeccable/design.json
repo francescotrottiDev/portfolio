@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T13:56:25.000Z",
+  "title": "Design System: The Living Engineering Notebook",
+  "extensions": {
+    "colorMeta": {
+      "ground": { "role": "neutral", "displayName": "Notebook Charcoal", "tonalRamp": ["oklch(15.00% 0.0044 264.46)", "oklch(26.43% 0.0044 264.46)", "oklch(37.86% 0.0044 264.46)", "oklch(49.29% 0.0044 264.46)", "oklch(60.71% 0.0044 264.46)", "oklch(72.14% 0.0044 264.46)", "oklch(83.57% 0.0044 264.46)", "oklch(95.00% 0.0044 264.46)"] },
+      "ink": { "role": "neutral", "displayName": "Chalk Ink", "tonalRamp": ["oklch(15.00% 0.0053 106.50)", "oklch(26.43% 0.0053 106.50)", "oklch(37.86% 0.0053 106.50)", "oklch(49.29% 0.0053 106.50)", "oklch(60.71% 0.0053 106.50)", "oklch(72.14% 0.0053 106.50)", "oklch(83.57% 0.0053 106.50)", "oklch(95.00% 0.0053 106.50)"] },
+      "muted": { "role": "neutral", "displayName": "Pencil Gray", "tonalRamp": ["oklch(15.00% 0.0071 115.75)", "oklch(26.43% 0.0071 115.75)", "oklch(37.86% 0.0071 115.75)", "oklch(49.29% 0.0071 115.75)", "oklch(60.71% 0.0071 115.75)", "oklch(72.14% 0.0071 115.75)", "oklch(83.57% 0.0071 115.75)", "oklch(95.00% 0.0071 115.75)"] },
+      "line": { "role": "neutral", "displayName": "Drawing Seam", "tonalRamp": ["oklch(15.00% 0.0052 121.72)", "oklch(26.43% 0.0052 121.72)", "oklch(37.86% 0.0052 121.72)", "oklch(49.29% 0.0052 121.72)", "oklch(60.71% 0.0052 121.72)", "oklch(72.14% 0.0052 121.72)", "oklch(83.57% 0.0052 121.72)", "oklch(95.00% 0.0052 121.72)"] },
+      "accent": { "role": "primary", "displayName": "Joint Amber", "tonalRamp": ["oklch(15.00% 0.0907 75.19)", "oklch(26.43% 0.0907 75.19)", "oklch(37.86% 0.0907 75.19)", "oklch(49.29% 0.0907 75.19)", "oklch(60.71% 0.0907 75.19)", "oklch(72.14% 0.0907 75.19)", "oklch(83.57% 0.0907 75.19)", "oklch(95.00% 0.0907 75.19)"] },
+      "ice": { "role": "neutral", "displayName": "Soft Chalk", "tonalRamp": ["oklch(15.00% 0.0096 113.19)", "oklch(26.43% 0.0096 113.19)", "oklch(37.86% 0.0096 113.19)", "oklch(49.29% 0.0096 113.19)", "oklch(60.71% 0.0096 113.19)", "oklch(72.14% 0.0096 113.19)", "oklch(83.57% 0.0096 113.19)", "oklch(95.00% 0.0096 113.19)"] },
+      "grid-dot": { "role": "neutral", "displayName": "Grid White", "tonalRamp": ["oklch(15.00% 0.0000 89.88 / 0.2510)", "oklch(26.43% 0.0000 89.88 / 0.2510)", "oklch(37.86% 0.0000 89.88 / 0.2510)", "oklch(49.29% 0.0000 89.88 / 0.2510)", "oklch(60.71% 0.0000 89.88 / 0.2510)", "oklch(72.14% 0.0000 89.88 / 0.2510)", "oklch(83.57% 0.0000 89.88 / 0.2510)", "oklch(95.00% 0.0000 89.88 / 0.2510)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Oversized Question", "purpose": "Pinned WHAT IF? desktop headline: clamp(140px, 16vw, 240px), 68% font-stretch; compact desktop uses clamp(140px, 17vw, 190px). Intentionally exceeds 96px. CSS functions are omitted from portable frontmatter dimensions, not replaced with fixed sizes." },
+      "display-mobile": { "displayName": "Mobile Question", "purpose": "Hero at 700px and below: clamp(110px, 29vw, 190px), 72% font-stretch; remains intentionally oversized." },
+      "headline": { "displayName": "Notebook Headline", "purpose": "Heavy section headings: clamp(34px, 4vw, 60px), 85% font-stretch; approach and about retain documented local sizes." },
+      "title": { "displayName": "Project Title", "purpose": "Project headings, 26px on mobile; no category eyebrow." },
+      "body": { "displayName": "Reading Body", "purpose": "Base document and about prose." },
+      "body-compact": { "displayName": "Engineering Notes", "purpose": "Project descriptions, section copy, and native summaries." },
+      "body-large": { "displayName": "Approach Statement", "purpose": "40ch approach prose, reduced to 18px on mobile." },
+      "navigation": { "displayName": "Section Navigation", "purpose": "All four native anchors, including on mobile." },
+      "link": { "displayName": "Text Action", "purpose": "Underlined semibold anchors with inline SVG arrows and 44px minimum height." },
+      "caption": { "displayName": "Study Disclosure", "purpose": "Renderer/disclaimer caption lines, project-art disclosure, informational placeholder label, and Reset button; drawing caption lead-in is 13px." },
+      "control-label": { "displayName": "Joint Label and Angle", "purpose": "Native joint labels and actual angle outputs; outputs are amber, use tabular numerals, and have aria-live off." },
+      "control-status": { "displayName": "Linkage Status", "purpose": "Compact role=status feedback, including explicit closest-reachable-pose explanation when a target is limited." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "state-transition", "value": "180ms", "purpose": "Anchor/button color, background-color, and border-color feedback; no autonomous object or background movement." },
+      { "name": "link-arrow", "value": "transform 200ms ease-out", "purpose": "Up-right text-link arrow shifts 2px right and 2px up on hover." },
+      { "name": "disclosure-indicator", "value": "transform 180ms ease-out", "purpose": "Native details plus stroke rotates from 90deg to 0deg when opened." },
+      { "name": "anchor-scroll", "value": "smooth", "purpose": "Native document anchor scrolling; reduced motion switches to auto." },
+      { "name": "joint-damping", "value": "1 - exp(-18 * clamp(delta, 0, 0.05))", "purpose": "Input-driven joint-angle interpolation only; forward kinematics recomputes rigid endpoints. Direct sliders snap. Frames stop when settled, offscreen, or tab-hidden; there is no continuous idle loop." },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Snap every requested pose, zero CSS transition/animation durations, and disable smooth scrolling. No autonomous movement or pause control." }
+    ],
+    "breakpoints": [
+      { "name": "compact-phone-max", "value": "360px" },
+      { "name": "stacked-layout-max", "value": "700px" },
+      { "name": "compact-desktop-max", "value": "1100px" },
+      { "name": "wide-alignment-min", "value": "1600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Four-anchor Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Native section navigation; all four anchors remain visible on mobile, with no menu or active-section tracker.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation specimen\"><a href=\"#work\">Work</a><a href=\"#approach\">Approach</a><a href=\"#tlabs\">T labs <span class=\"ds-nav-dot\" aria-hidden=\"true\"></span></a><a href=\"#about\">About <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 19 19 5M5 5h14v14\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\"/></svg></a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:38px;color:var(--ink,#f1f1ed);font:400 13px/1.7 var(--body,'Manrope',sans-serif)}.ds-nav a{display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;color:inherit;text-decoration:none;touch-action:manipulation;transition:color 180ms}.ds-nav a:hover{color:var(--accent,#d7ad72)}.ds-nav a:focus-visible{outline:2px solid var(--accent,#d7ad72);outline-offset:6px}.ds-nav svg{width:14px;height:14px;flex-shrink:0}.ds-nav-dot{width:4px;height:4px;border-radius:50%;background:var(--accent,#d7ad72)}@media(max-width:700px){.ds-nav{width:100%;gap:0;justify-content:space-between}.ds-nav svg{display:none}}@media(prefers-reduced-motion:reduce){.ds-nav a{transition-duration:0s}}"
+    },
+    {
+      "name": "Arrow Text Link",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "A native text action with readable semibold type, thin rule, and inline SVG arrow.",
+      "html": "<a class=\"ds-link\" href=\"#work\">Back to the work <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 19 19 5M5 5h14v14\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ".ds-link{display:inline-flex;align-items:center;gap:40px;min-height:44px;border-bottom:1px solid #93968a;padding-bottom:10px;color:var(--ink,#f1f1ed);font:600 14px/1.7 var(--body,'Manrope',sans-serif);text-decoration:none;touch-action:manipulation;transition:color 180ms,border-color 180ms}.ds-link svg{width:19px;height:19px;flex-shrink:0;transition:transform 200ms ease-out}.ds-link:hover{color:var(--accent,#d7ad72);border-color:var(--accent,#d7ad72)}.ds-link:hover svg{transform:translate(2px,-2px)}.ds-link:focus-visible{outline:2px solid var(--accent,#d7ad72);outline-offset:6px}@media(prefers-reduced-motion:reduce){.ds-link,.ds-link svg{transition-duration:0s}}"
+    },
+    {
+      "name": "Native Project Disclosure",
+      "kind": "custom",
+      "refersTo": "project-disclosure",
+      "description": "Working native details/summary, independent of JavaScript and honest about the unpublished slot.",
+      "html": "<details class=\"ds-details\"><summary>What will go here <span class=\"ds-plus\" aria-hidden=\"true\"></span></summary><div class=\"ds-details-body\"><p>No project has been published in this slot yet.</p></div></details>",
+      "css": ".ds-details{border-top:1px solid var(--line,#40413e);margin-top:24px;font:400 14px/1.7 var(--body,'Manrope',sans-serif)}.ds-details summary{display:flex;align-items:center;justify-content:space-between;list-style:none;gap:15px;min-height:48px;color:var(--ink,#f1f1ed);cursor:pointer;touch-action:manipulation}.ds-details summary::-webkit-details-marker{display:none}.ds-details summary:hover{color:var(--accent,#d7ad72)}.ds-details summary:focus-visible{outline:2px solid var(--accent,#d7ad72);outline-offset:6px}.ds-plus{width:12px;height:12px;position:relative;flex-shrink:0}.ds-plus::before,.ds-plus::after{position:absolute;content:'';background:currentColor;width:12px;height:1px;top:6px}.ds-plus::after{transform:rotate(90deg);transition:transform 180ms ease-out}.ds-details[open] .ds-plus::after{transform:rotate(0)}.ds-details-body{color:var(--muted,#b0b1ac);padding-bottom:16px}.ds-details-body p{margin:0}@media(prefers-reduced-motion:reduce){.ds-plus::after{transition-duration:0s}}"
+    },
+    {
+      "name": "Project Placeholder Label",
+      "kind": "chip",
+      "refersTo": "project-placeholder",
+      "description": "Informational illustration disclosure, not a filter, control, or category eyebrow.",
+      "html": "<span class=\"ds-placeholder\">Project placeholder</span>",
+      "css": ".ds-placeholder{display:inline-block;color:var(--muted,#b0b1ac);background:var(--ground,#111214);border:1px solid var(--line,#40413e);border-radius:0;padding:3px 8px;font:400 12px/1.7 var(--body,'Manrope',sans-serif)}"
+    },
+    {
+      "name": "Linkage Drawing Caption",
+      "kind": "custom",
+      "refersTo": "drawing-caption",
+      "description": "Caption-only extraction in 3D mode. The live renderer line also supports Static view or 2D view · Controls available. SVG title/description and the no-hardware/no-dynamics disclosure remain in LinkageStudy.astro.",
+      "html": "<figure class=\"ds-study\"><figcaption class=\"ds-study-caption\"><span>Two links. One chain of motion.</span><span>3D view · Planar kinematics</span><span>Fixed lengths · No dynamics simulation</span></figcaption></figure>",
+      "css": ".ds-study{margin:0}.ds-study-caption{display:flex;flex-direction:column;align-items:end;gap:5px;color:#b5b8ae;font:400 13px/1.7 var(--body,'Manrope',sans-serif)}.ds-study-caption span:not(:first-child){color:var(--muted,#b0b1ac);font-size:12px}@media(max-width:700px){.ds-study-caption{align-items:start}}"
+    },
+    {
+      "name": "Reset Pose Button",
+      "kind": "button",
+      "refersTo": "reset-button",
+      "description": "Quiet native action with a 44px minimum height. In the live linkage it restores 55° / −71.86° and clears the bounded 64-point trace; this portable specimen has no controller.",
+      "html": "<button class=\"ds-reset\" type=\"button\">Reset pose</button>",
+      "css": ".ds-reset{min-height:44px;flex-shrink:0;border:1px solid var(--line,#40413e);border-radius:0;padding:8px 12px;background:transparent;color:var(--ink,#f1f1ed);font:400 12px/1.7 var(--body,'Manrope',sans-serif);cursor:pointer;touch-action:manipulation;transition:color 180ms,background-color 180ms,border-color 180ms}.ds-reset:not(:disabled):hover{border-color:var(--accent,#d7ad72);color:var(--accent,#d7ad72)}.ds-reset:focus-visible{outline:2px solid var(--accent,#d7ad72);outline-offset:6px}.ds-reset:disabled{cursor:not-allowed;opacity:.45}@media(prefers-reduced-motion:reduce){.ds-reset{transition-duration:0s}}"
+    },
+    {
+      "name": "Native Joint Sliders",
+      "kind": "input",
+      "refersTo": "joint-slider",
+      "description": "Two labelled native ranges at actual initial angles, with non-live tabular outputs. Desktop range height is 36px, mobile 44px. Static readout specimen only: the shipped controller synchronizes actual values, IK, and SVG independently of Three.js; no-JS disables the fieldset.",
+      "html": "<fieldset class=\"ds-joints\"><legend>Robotic linkage joint angles</legend><div class=\"ds-joint-grid\"><div class=\"ds-joint\"><label for=\"ds-shoulder\">Shoulder <span>θ₁</span></label><output for=\"ds-shoulder\" aria-live=\"off\">55.0°</output><input id=\"ds-shoulder\" type=\"range\" min=\"40\" max=\"65\" step=\"0.1\" value=\"55\" /></div><div class=\"ds-joint\"><label for=\"ds-elbow\">Elbow <span>θ₂</span></label><output for=\"ds-elbow\" aria-live=\"off\">−71.9°</output><input id=\"ds-elbow\" type=\"range\" min=\"-95\" max=\"-45\" step=\"0.1\" value=\"-71.86\" /></div></div></fieldset>",
+      "css": ".ds-joints{border:0;padding:0;margin:0;min-width:0;color:var(--ink,#f1f1ed);font:400 13px/1.7 var(--body,'Manrope',sans-serif)}.ds-joints legend{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-joint-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.ds-joint{display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 8px;min-width:0}.ds-joint label span{color:var(--muted,#b0b1ac);margin-left:5px}.ds-joint output{color:var(--accent,#d7ad72);font-variant-numeric:tabular-nums}.ds-joint input{grid-column:1/-1;width:100%;min-width:0;height:36px;margin:3px 0;background:transparent;accent-color:var(--accent,#d7ad72);cursor:pointer;color-scheme:dark}.ds-joint input:hover{cursor:pointer}.ds-joint input:focus-visible{outline:2px solid var(--accent,#d7ad72);outline-offset:6px}.ds-joint input:disabled{cursor:not-allowed}@media(max-width:700px){.ds-joint input{height:44px}}"
+    },
+    {
+      "name": "Reach-limit Status",
+      "kind": "custom",
+      "refersTo": "linkage-status-limited",
+      "description": "Text-only extraction of constrained-target feedback. The live drawing also shows the requested crosshair and a connector to the achieved wrist, so the limit does not rely on color. Both renderers use DRAWING_FIELD (−20, −52, 1040, 712) to retain the complete gripper silhouette.",
+      "html": "<p class=\"ds-limit-status\" role=\"status\">Joint limit reached. Showing the closest reachable pose.</p>",
+      "css": ".ds-limit-status{margin:0;max-width:33ch;min-height:36px;color:var(--accent,#d7ad72);font:400 12px/1.5 var(--body,'Manrope',sans-serif)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Living Engineering Notebook",
+    "overview": "One continuous charcoal drawing surface: chalk-white questions, heavy condensed lettering, and a material linkage integrated with construction geometry. Manrope keeps the engineering notes approachable. The interface recedes so the drawing and the owner's interdisciplinary practice carry the character; amber marks joints, small emphasis, and usable states rather than a second theme.\n\nThis merges the approved Phase 1–2 foundation with the explicitly authorized Phase 3 interactive Three.js linkage, the confirmed public name Francesco Trotti, and brighter dots. The notebook ground and typography extend through the preserved portfolio sections. Phase 4 section recomposition and Phase 5 background/scroll choreography remain deferred; this is not a completed six-phase redesign. Only requested mechanism movement animates; the drawing sheet remains static.",
+    "keyCharacteristics": [
+      "Neutral charcoal with a continuous, registered white dotted field.",
+      "Oversized Archivo Variable questions paired with readable Manrope notes.",
+      "Original SVG mechanics progressively enhanced with registered Three.js geometry and real fixed-link kinematics.",
+      "Native angle controls with interactive SVG fallback; reading, anchors, and disclosures work without JavaScript."
+    ],
+    "rules": [
+      { "name": "The Continuous Sheet Rule", "body": "Keep the document's dotted ground continuous through transparent section grounds; do not restore the former blue bench or brass venture panel.", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "Use heavy, width-variable Archivo for expressive headings and Manrope for reading, captions, navigation, and actions; do not restore the former display face.", "section": "typography" }
+    ],
+    "dos": [
+      "**Do** preserve neutral charcoal, registered dots, transparent section grounds, and square interface geometry.",
+      "**Do** retain the intentionally oversized question and the Archivo/Manrope division of roles.",
+      "**Do** keep illustration captions, factual placeholders, native navigation/disclosures, visible focus, and reduced-motion handling.",
+      "**Do** preserve all four navigation anchors and trailing project discipline metadata on mobile.",
+      "**Do** keep joint controls truthful, link lengths rigid, the complete silhouette within one shared field, and SVG usable when 3D fails.",
+      "**Do** stop at authorized Phase 3; keep Phase 4 section recomposition and Phase 5 background/scroll choreography deferred."
+    ],
+    "donts": [
+      "**Don't** restore obsolete blue accents, former fonts, brass panels, or actuator bench controls from the superseded system.",
+      "**Don't** animate the dotted field, add autonomous mechanism motion, or claim a completed six-phase redesign.",
+      "**Don't** invent projects, results, identity, measurements, telemetry, startup traction, delivered impact, or contact destinations.",
+      "**Don't** make reading, navigation, or project disclosures depend on JavaScript or WebGL.",
+      "**Don't** turn explanatory notes into reusable decorative eyebrows or treat review screenshots as shipped imagery."
+    ]
+  }
+}

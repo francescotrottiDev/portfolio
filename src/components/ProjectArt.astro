@@ -1,0 +1,43 @@
+---
+interface Props { kind: string; }
+const { kind } = Astro.props;
+---
+<svg class:list={['project-drawing', `drawing-${kind}`]} viewBox="0 0 700 440" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id={`metal-${kind}`} x1="180" y1="50" x2="500" y2="410" gradientUnits="userSpaceOnUse"><stop stop-color="#abc0c9"/><stop offset=".27" stop-color="#536974"/><stop offset=".53" stop-color="#25353f"/><stop offset=".73" stop-color="#748c98"/><stop offset="1" stop-color="#273b46"/></linearGradient>
+    <pattern id={`grid-${kind}`} width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" stroke="#6a8a9c" stroke-opacity=".09"/></pattern>
+  </defs>
+  <rect width="700" height="440" fill={`url(#grid-${kind})`}/>
+  {kind === 'linkage' && <g transform="translate(350 245) rotate(-24)">
+    <ellipse cy="122" rx="148" ry="31" fill="#080e13" opacity=".6"/>
+    <path d="m-96 80 103-41 103 40-103 44Z" fill={`url(#metal-${kind})`} stroke="#6b8795"/>
+    <path d="M-69 72V-2L4-42 77-2v74L4 109Z" fill="#1d2a33" stroke="#708793"/>
+    <ellipse cy="-2" rx="74" ry="37" fill={`url(#metal-${kind})`} stroke="#adc0c7"/>
+    <path d="M-39-15v-118l66-35 29 20V-22L-7 8Z" fill={`url(#metal-${kind})`} stroke="#92a8b2"/>
+    <path d="m-20-133 135-76 29 22L14-108Z" fill="#8aa0ab" stroke="#b6c6cc"/>
+    <path d="m14-108 130-79v34L14-74Z" fill="#344a57" stroke="#738c99"/>
+    <circle cx="6" cy="-135" r="26" fill="#182630" stroke="#b4c7d1" stroke-width="6"/>
+    <circle cx="6" cy="-135" r="13" stroke="#d8a367" stroke-width="3"/>
+    <path d="m130-180 38-5 17 30-24 20-27-14" fill={`url(#metal-${kind})`} stroke="#96acb8"/>
+    <path d="m168-185 14-25m3 55 27-7" stroke="#becfd5" stroke-width="7"/>
+    <path d="m-18-67 0 66" stroke="#d6a368" stroke-width="5"/>
+    <ellipse cy="-2" rx="31" ry="15" fill="#16232b" stroke="#7b96a5"/>
+    <path d="M-142 131H134M-142 125v12m276-12v12" stroke="#8aa8b9" stroke-opacity=".45"/>
+  </g>}
+  {kind === 'network' && <g>
+    {[0, 1, 2, 3, 4].map((col) => [0, 1, 2, 3, 4].map((row) => <g>
+      {[0, 1, 2, 3, 4].map((next) => col < 4 && <path d={`M${180 + col * 85} ${90 + row * 65}L${265 + col * 85} ${90 + next * 65}`} stroke="#91b7c9" stroke-opacity={row === next ? '.48' : '.1'}/>) }
+      <circle cx={180 + col * 85} cy={90 + row * 65} r={col === 2 && row === 2 ? 12 : 6} fill={col === 2 && row === 2 ? '#deb17b' : '#263e4c'} stroke={col === 2 && row === 2 ? '#f5cca0' : '#8cabbc'}/>
+    </g>))}
+    <path d="m180 220 85-65 85 65 85 65 85-65" stroke="#e7b577" stroke-width="2"/>
+  </g>}
+  {kind === 'circuit' && <g transform="translate(350 220) rotate(-15) scale(.9)">
+    <rect x="-205" y="-148" width="410" height="296" rx="9" fill="#1d333a" stroke="#5b7c86" stroke-width="2"/>
+    {[-180, 180].map((x) => [-123, 123].map((y) => <circle cx={x} cy={y} r="9" fill="#101c23" stroke="#aaac8a" stroke-width="3"/>))}
+    {Array.from({length: 9}, (_, i) => <g><path d={`M${-72 + i*18} -55v-40h${i%2 ? -42 : 42}v-42M${-72 + i*18} 55v40h${i%2 ? 42 : -42}v42`} stroke="#6f9a9d" stroke-width="2"/><path d={`M-90 ${-48 + i*12}h-42v${i%2 ? -16 : 16}h-50M90 ${-48 + i*12}h42v${i%2 ? 16 : -16}h50`} stroke="#5d8a91" stroke-width="2"/></g>)}
+    <rect x="-85" y="-60" width="170" height="120" fill="#132129" stroke="#91a8ad" stroke-width="2"/>
+    <rect x="-67" y="-43" width="134" height="86" fill="#23323a" stroke="#637780"/>
+    <path d="m-20 16 20-35 20 35m-31-11h22" stroke="#d9ad7e" stroke-width="3"/>
+    {[0, 1, 2, 3, 4, 5].map((i) => <g><rect x={-150+i*20} y="-120" width="9" height="15" fill="#d4bd91"/><rect x={50+i*20} y="106" width="9" height="15" fill="#d4bd91"/></g>)}
+  </g>}
+</svg>

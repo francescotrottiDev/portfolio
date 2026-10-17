@@ -1,0 +1,104 @@
+---
+import { DRAWING_FIELD } from '../lib/linkage-view';
+---
+<div class="linkage-experiment" id="linkage-experiment" style={`--linkage-aspect: ${DRAWING_FIELD.width} / ${DRAWING_FIELD.height}`}>
+<figure class="linkage-study" aria-labelledby="linkage-caption">
+  <div class="linkage-viewport">
+  <svg class="linkage-drawing" viewBox={`${DRAWING_FIELD.x} ${DRAWING_FIELD.y} ${DRAWING_FIELD.width} ${DRAWING_FIELD.height}`} role="img" aria-labelledby="linkage-title linkage-description">
+    <title id="linkage-title">An illustrative two-link robotic mechanism</title>
+    <desc id="linkage-description">A fixed shoulder connects to a raised elbow and an end effector. Two rigid links of 366 and 345 drawing units. This illustrative study is not a real portfolio project. Enable JavaScript to adjust its joint angles.</desc>
+    <defs>
+      <linearGradient id="linkage-metal" x1="0" y1="-30" x2="0" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#d6d6cf"/><stop offset=".13" stop-color="#a5a7a4"/><stop offset=".55" stop-color="#515654"/><stop offset="1" stop-color="#313635"/></linearGradient>
+      <linearGradient id="linkage-bearing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d6d7d0"/><stop offset=".45" stop-color="#6d7370"/><stop offset="1" stop-color="#292e2d"/></linearGradient>
+      <pattern id="linkage-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0v8" stroke="#9a9b90" stroke-width="1" opacity=".45"/></pattern>
+    </defs>
+
+    <g class="drawing-construction" fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M130 480h760M260 70v480" stroke-dasharray="4 8"/>
+      <path data-skeleton d="M260 480 470 180 800 280" stroke-dasharray="7 7"/>
+      <path d="M260 480a366 366 0 0 1 337-365" stroke-dasharray="2 8"/>
+      <path data-elbow-sweep d="M470 180a345 345 0 0 1 345 345" stroke-dasharray="2 8"/>
+      <path data-length-lines d="m198 435 210-300m-216 297 12 8m198-308 12 8M491 108l330 100m-333-94 6-12m324 112 6-12"/>
+      <path data-joint-rays d="M260 480h100m-100 0 54-77M470 180l60-86m-60 86 100 30"/>
+      <path data-shoulder-arc d="M325 480a65 65 0 0 0-28-53" stroke="#d7ad72"/>
+      <path data-elbow-arc d="M510 123a70 70 0 0 1 27 77" stroke="#d7ad72"/>
+    </g>
+    <polyline data-trace class="linkage-trace" fill="none" stroke="#c9ccbd" stroke-width="1" stroke-opacity=".45" points="" aria-hidden="true" />
+
+    <g class="drawing-dimension-labels" fill="currentColor" font-family="var(--body)" font-size="17">
+      <text data-length-one transform="translate(270 272) rotate(-55)">L₁</text><text data-length-two transform="translate(652 147) rotate(17)">L₂</text>
+      <text data-angle-one x="334" y="450" fill="#d7ad72">55.0°</text><text data-angle-two x="544" y="158" fill="#d7ad72">−71.9°</text>
+    </g>
+
+    <g data-linkage-solid>
+    <g class="linkage-base">
+      <path d="M200 514h120l25 31H175Z" fill="#262a28" stroke="#92978f"/>
+      <path d="M175 545h170v13H175Z" fill="url(#linkage-hatch)" stroke="#696e67"/>
+      <path d="M238 485h44v29h-44Z" fill="#727a72" stroke="#b6b9af"/>
+      <path d="M154 559h212" stroke="#b5b8ae"/>
+      {[191, 329].map(x => <g><path d={`M${x} 537v17`} stroke="#c4c7bd" stroke-width="3"/><circle cx={x} cy="533" r="4" fill="#acb0a5"/></g>)}
+    </g>
+
+    <g data-upper transform="translate(260 480) rotate(-55)">
+      <rect x="0" y="-19" width="366" height="58" rx="22" fill="#272c29" stroke="#6b736c"/>
+      <rect x="0" y="-30" width="366" height="58" rx="24" fill="url(#linkage-metal)" stroke="#d2d2c8" stroke-width="1.3"/>
+      <rect x="69" y="-12" width="226" height="22" rx="11" fill="#171b19" stroke="#7d857a"/>
+      <path d="M80-1h204" stroke="#606c61" stroke-width="1.5"/>
+      <path d="M50-24h266" stroke="#e1e0d4" stroke-opacity=".7"/>
+      {[52, 314].map(x => <g><circle cx={x} cy="-17" r="3.5" fill="#151a17" stroke="#c1c6b7"/><circle cx={x} cy="17" r="3.5" fill="#151a17" stroke="#c1c6b7"/></g>)}
+    </g>
+
+    <g data-lower transform="translate(470 180) rotate(16.86)">
+      <rect x="0" y="-13" width="345" height="48" rx="20" fill="#292e29" stroke="#6a7366"/>
+      <rect x="0" y="-24" width="345" height="48" rx="20" fill="url(#linkage-metal)" stroke="#c9cdbf" stroke-width="1.3"/>
+      <rect x="62" y="-8" width="225" height="16" rx="8" fill="#20251f" stroke="#737e6e"/>
+      <path d="M54-18h241" stroke="#e0e0d1" stroke-opacity=".65"/>
+      {[45, 302].map(x => <g><circle cx={x} cy="-14" r="3" fill="#1d231c" stroke="#bdc4b3"/><circle cx={x} cy="14" r="3" fill="#1d231c" stroke="#bdc4b3"/></g>)}
+    </g>
+
+    {[{x:260,y:480,r:39},{x:470,y:180,r:38},{x:800,y:280,r:25}].map(({x,y,r}, index) => <g data-elbow-joint={index === 1 ? '' : undefined} data-wrist-joint={index === 2 ? '' : undefined} transform={`translate(${x} ${y})`}>
+      <circle cy="7" r={r} fill="#222824" stroke="#697464"/>
+      <circle r={r} fill="url(#linkage-bearing)" stroke="#d1d4c4" stroke-width="1.3"/>
+      <circle r={r-7} fill="#252d25" stroke="#818c76"/>
+      <circle r={r-13} fill="#b39a71" stroke="#dec399" stroke-width="1.5"/>
+      <circle r={r-20} fill="#252c24" stroke="#c4b590"/>
+      <path d="M-5 0H5M0-5V5" stroke="#d5d9c9" stroke-width="1"/>
+      {[0, 1, 2, 3].map(i => <circle cx={Math.cos(i*Math.PI/2+Math.PI/4)*(r-4)} cy={Math.sin(i*Math.PI/2+Math.PI/4)*(r-4)} r="2" fill="#252b24"/>)}
+    </g>)}
+
+    <g data-tool class="linkage-tool" transform="translate(800 280) rotate(16.86)" fill="#848d7c" stroke="#d0d5c5" stroke-width="1.2"><path d="m22-10 25-4 15 10v8l-15 10-25-4Z"/><path d="m47-14 21-13h20v9H71L58-6m-11 20 21 13h20v-9H71L58 6"/></g>
+    </g>
+    <g class="drawing-callouts" fill="none" stroke="currentColor" stroke-width="1">
+      <path data-elbow-leader d="m470 135 30-69h175"/><path data-tool-leader d="M838 280l66 55v42h-95"/><path d="M220 480h-65l-28-27H63"/>
+      <circle data-elbow-dot cx="470" cy="135" r="2.5" fill="currentColor"/>
+    </g>
+    <g class="drawing-callout-labels" fill="currentColor" font-family="var(--body)" font-size="15">
+      <text x="508" y="55">Elbow / revolute joint</text><text data-tool-label x="809" y="402">End effector</text><text x="63" y="441">Fixed shoulder</text>
+    </g>
+    <path data-reach-line class="linkage-reach-line" fill="none" stroke="#d7ad72" stroke-width="1" stroke-dasharray="4 5" aria-hidden="true" />
+    <g data-requested class="linkage-requested" transform="translate(800 280)" fill="none" stroke="#d7ad72" stroke-width="1" aria-hidden="true" style="display:none"><circle r="8"/><path d="M-13 0H13M0-13V13"/></g>
+    <g data-target class="linkage-target" transform="translate(800 280)" aria-hidden="true">
+      <path d="M-35-14v-10h10M35-14v-10H25M-35 14v10h10M35 14v10H25" fill="none" stroke="#d7ad72" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+      <circle r="28" fill="transparent" stroke="transparent" stroke-width="26" vector-effect="non-scaling-stroke" pointer-events="all"/>
+    </g>
+  </svg>
+  </div>
+  <figcaption id="linkage-caption"><span>Two links. One chain of motion.</span><span data-renderer-status>Illustrative study · Static view</span><span>Fixed lengths · No dynamics simulation</span></figcaption>
+</figure>
+<div class="linkage-controls">
+  <fieldset disabled aria-describedby="linkage-status linkage-limits">
+    <legend class="visually-hidden">Robotic linkage joint angles</legend>
+    <div class="joint-inputs">
+      <div class="joint-input"><label for="shoulder-angle">Shoulder <span>θ₁</span></label><output id="shoulder-value" for="shoulder-angle" aria-live="off">55.0°</output><input type="range" id="shoulder-angle" min="40" max="65" step="0.1" value="55" /></div>
+      <div class="joint-input"><label for="elbow-angle">Elbow <span>θ₂</span></label><output id="elbow-value" for="elbow-angle" aria-live="off">−71.9°</output><input type="range" id="elbow-angle" min="-95" max="-45" step="0.1" value="-71.86" /></div>
+    </div>
+    <div class="linkage-control-footer"><p id="linkage-status" role="status">Static view. Enable JavaScript for controls.</p><button type="button" data-reset>Reset pose</button></div>
+    <span class="visually-hidden" id="linkage-limits">Illustrative fixture limits: shoulder 40 to 65 degrees, elbow minus 95 to minus 45 degrees. Targets outside this workspace stop at the closest feasible pose. Lengths are drawing units, not hardware measurements.</span>
+  </fieldset>
+</div>
+</div>
+<script>
+  import { initLinkage } from '../scripts/linkage';
+  const root = document.getElementById('linkage-experiment');
+  if (root) initLinkage(root);
+</script>
