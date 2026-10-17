@@ -17,7 +17,28 @@ npm run preview
 npm test
 ```
 
-Deploy the generated `dist/` directory to any static host. A deployment provider and custom domain have not been selected.
+Deploy the generated `dist/` directory to any static host.
+
+## Deploy to GitHub Pages
+
+`.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages on every push to `main` (and on manual dispatch). It uses the official `withastro/action`.
+
+The site is a project site served from a sub-path, so the workflow sets:
+
+- `SITE_URL=https://francescotrottidev.github.io`
+- `BASE_PATH=/portfolio`
+
+`astro.config.mjs` reads these to set Astro's `site` and `base`. Internal links use `import.meta.env.BASE_URL` (via `withBase()` in `src/lib/project-utils.ts`), so they work both at the root and under `/portfolio/`.
+
+To build the exact production output locally:
+
+```sh
+SITE_URL=https://francescotrottidev.github.io BASE_PATH=/portfolio npm run build
+```
+
+With no environment variables, `npm run dev`, `npm run build`, and `npm test` keep serving from the root (`/`).
+
+After the first push, enable Pages in the repository under **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Make it yours
 

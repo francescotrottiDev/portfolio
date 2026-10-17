@@ -1,8 +1,9 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 import Arrow from '../Arrow.astro';
-import { categoryKey, categoryUrl, type Project } from '../../lib/project-utils';
+import { base, categoryKey, categoryUrl, withBase, type Project } from '../../lib/project-utils';
 interface Props { projects: Project[]; activeCategory?: string; }
+const archiveUrl = withBase('/projects/');
 const { projects, activeCategory } = Astro.props;
 const categories = [...new Set(projects.map(project=>project.data.category))].sort((a,b)=>a.localeCompare(b));
 const count = projects.filter(project=>!activeCategory || project.data.category === activeCategory).length;
@@ -11,13 +12,13 @@ const count = projects.filter(project=>!activeCategory || project.data.category 
   <div class="archive-heading"><div><h1 class="archive-title" id="archive-title">Projects<span class="accent">.</span></h1><p>Engineering experiments, technical ideas, and the work behind them.</p></div><p class="archive-count" role="status" data-project-count>{count} {count === 1 ? 'entry' : 'entries'}{activeCategory && <> / {activeCategory}</>}</p></div>
   {projects.some(project=>project.data.placeholder) && <p class="archive-disclosure">Entries marked “Project placeholder” preserve spaces for future work. Illustrations are not evidence of completed projects.</p>}
   <nav class="archive-filters" aria-label="Filter projects by category">
-    <a href="/projects/" data-project-filter data-category="" aria-current={!activeCategory ? 'page' : undefined}>All projects <span>{projects.length}</span></a>
+    <a href={archiveUrl} data-project-filter data-category="" aria-current={!activeCategory ? 'page' : undefined}>All projects <span>{projects.length}</span></a>
     {categories.map(category=><a href={categoryUrl(category)} data-project-filter data-category={categoryKey(category)} aria-current={activeCategory === category ? 'page' : undefined}>{category} <span>{projects.filter(project=>project.data.category === category).length}</span></a>)}
   </nav>
   <ul class="archive-grid" aria-label="Project entries" data-project-grid>
     {projects.map(project=><li data-project-entry data-category={categoryKey(project.data.category)} hidden={!!activeCategory && project.data.category !== activeCategory}><ProjectCard project={project} /></li>)}
   </ul>
-  <div class="archive-empty" data-project-empty hidden={count>0}><h2>{projects.length ? 'No entries in this view.' : 'The archive starts here.'}</h2><p>{projects.length ? 'Choose another category or return to the complete archive.' : 'Projects will appear here as they are published.'}</p><a class="text-link" href={projects.length ? '/projects/' : '/'} data-clear-filter={projects.length ? '' : undefined}>{projects.length ? 'Show all projects' : 'Return to the homepage'} <Arrow /></a></div>
+  <div class="archive-empty" data-project-empty hidden={count>0}><h2>{projects.length ? 'No entries in this view.' : 'The archive starts here.'}</h2><p>{projects.length ? 'Choose another category or return to the complete archive.' : 'Projects will appear here as they are published.'}</p><a class="text-link" href={projects.length ? archiveUrl : base} data-clear-filter={projects.length ? '' : undefined}>{projects.length ? 'Show all projects' : 'Return to the homepage'} <Arrow /></a></div>
 </section>
 <script>
   import { initProjectFilters } from '../../scripts/project-filters';

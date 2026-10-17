@@ -1,17 +1,19 @@
 ---
 import { getImage } from 'astro:assets';
-import type { Project } from '../../lib/project-utils';
+import { withBase, type Project } from '../../lib/project-utils';
 interface Props { video: Project['data']['videos'][number]; }
 const { video } = Astro.props;
 const poster = video.kind === 'file' && video.poster ? await getImage({ src:video.poster, width:Math.min(1200,video.poster.width), format:video.poster.format === 'svg' ? 'svg' : 'webp' }) : undefined;
+const fileSrc = video.kind === 'file' ? withBase(video.src) : undefined;
+const captions = video.kind === 'file' && video.captions ? withBase(video.captions) : undefined;
 const external = video.kind === 'youtube' ? `https://www.youtube.com/watch?v=${video.id}` : video.kind === 'vimeo' ? `https://vimeo.com/${video.id}` : undefined;
 const embed = video.kind === 'youtube' ? `https://www.youtube-nocookie.com/embed/${video.id}` : video.kind === 'vimeo' ? `https://player.vimeo.com/video/${video.id}?dnt=1` : undefined;
 ---
 <figure class="project-video">
   {video.kind === 'file' ? <video controls playsinline preload="none" poster={poster?.src} aria-label={video.title}>
-    <source src={video.src} />
-    {video.captions && <track kind="captions" src={video.captions} srclang="en" label="English" default />}
-    <p><a href={video.src}>Download {video.title}</a></p>
+    <source src={fileSrc} />
+    {captions && <track kind="captions" src={captions} srclang="en" label="English" default />}
+    <p><a href={fileSrc}>Download {video.title}</a></p>
   </video> : <div class="video-embed" data-video-embed data-src={embed} data-title={video.title}>
     <div class="video-embed-message"><p>{video.title}</p><p>Loading this video connects to {video.kind === 'youtube' ? 'YouTube' : 'Vimeo'}.</p><button type="button" data-load-video hidden>Load video</button><a href={external} rel="noopener noreferrer">Watch on {video.kind === 'youtube' ? 'YouTube' : 'Vimeo'}</a></div>
   </div>}

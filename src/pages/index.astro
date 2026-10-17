@@ -6,6 +6,7 @@ import '@fontsource/manrope/600.css';
 import LinkageStudy from '../components/LinkageStudy.astro';
 import { portfolio } from '../data/portfolio';
 import { getFeaturedProjects } from '../lib/projects';
+import { withBase } from '../lib/project-utils';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ProjectCard from '../components/projects/ProjectCard.astro';
 import ArrowIcon from '../components/Arrow.astro';
@@ -39,7 +40,7 @@ const featured = await getFeaturedProjects();
     <div class="project-grid">
       {featured.map((project, index) => <ProjectCard project={project} mode="home" featured={index === 0} />)}
     </div>
-    <a class="text-link work-all-link" href="/projects/">View all projects <ArrowIcon /></a>
+    <a class="text-link work-all-link" href={withBase('/projects/')}>View all projects <ArrowIcon /></a>
   </section>
 
   <section class="approach-section" id="approach" aria-labelledby="approach-title">

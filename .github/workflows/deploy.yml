@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Deploy automatically on every push to the main branch.
+  push:
+    branches: [main]
+  # Allow running the workflow manually from the Actions tab.
+  workflow_dispatch:
+
+# Publish to Pages via OIDC, and keep read-only access to the repository.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent Pages deployment; never cancel an in-progress release.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # GitHub Pages project site URL: https://<owner>.github.io/<repo>/
+      # Astro uses these to build absolute canonical/social URLs and to prefix
+      # internal links for the /portfolio/ sub-path. See astro.config.mjs.
+      SITE_URL: https://francescotrottidev.github.io
+      BASE_PATH: /portfolio
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Build and upload the static site
+        uses: withastro/action@v6
+        with:
+          node-version: 22
+          package-manager: npm
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,7 +1,8 @@
 ---
 import Arrow from './Arrow.astro';
 import { portfolio } from '../data/portfolio';
+import { base } from '../lib/project-utils';
 interface Props { home?: boolean; }
 const { home = false } = Astro.props;
 ---
-<footer class="site-footer"><a class="footer-mission" href={home ? '#' : '/'}>Keep asking.<br /><span>Keep building.</span><Arrow /></a><div class="footer-bottom"><span>{portfolio.name} · Personal engineering portfolio</span><a href="#main">Back to top <Arrow /></a><span>Built with curiosity.</span></div></footer>
+<footer class="site-footer"><a class="footer-mission" href={home ? '#' : base}>Keep asking.<br /><span>Keep building.</span><Arrow /></a><div class="footer-bottom"><span>{portfolio.name} · Personal engineering portfolio</span><a href="#main">Back to top <Arrow /></a><span>Built with curiosity.</span></div></footer>

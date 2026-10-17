@@ -7,7 +7,7 @@ import ProjectFigure from '../../components/projects/ProjectFigure.astro';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
 import Arrow from '../../components/Arrow.astro';
 import { getProjects } from '../../lib/projects';
-import { categoryUrl, projectUrl, projectYear, relatedProjects, type Project } from '../../lib/project-utils';
+import { categoryUrl, projectUrl, projectYear, relatedProjects, withBase, type Project } from '../../lib/project-utils';
 import '../../styles/projects.css';
 export async function getStaticPaths() {
   return (await getProjects()).map(project=>({params:{slug:project.data.slug},props:{project}}));
@@ -27,7 +27,7 @@ const displayDate = data.date ? new Date(data.date).toLocaleDateString('en', {ye
 ---
 <SiteLayout title={`${data.title} — Francesco Trotti`} description={data.description} image={data.cover?.image.src} noindex={data.placeholder}>
   <article class="project-detail section-wrap">
-    <nav class="project-breadcrumbs" aria-label="Breadcrumb"><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">{data.category}</span></nav>
+    <nav class="project-breadcrumbs" aria-label="Breadcrumb"><a href={withBase('/projects/')}>Projects</a><span aria-hidden="true">/</span><span aria-current="page">{data.category}</span></nav>
     <header class="project-detail-header">
       <h1>{data.title}</h1>
       <p class="project-introduction">{data.description}</p>
@@ -51,7 +51,7 @@ const displayDate = data.date ? new Date(data.date).toLocaleDateString('en', {ye
     {videos.length > 0 && <section class="project-media-section" aria-labelledby="project-videos-title"><h2 id="project-videos-title">Project videos</h2>{videos.map(video=><ProjectVideo video={video} />)}</section>}
     {hasLinks && <section class="project-resource-section" aria-labelledby="project-resources-title"><h2 id="project-resources-title">Project links</h2><ul>{data.repository && <li><a class="text-link" href={data.repository}>GitHub repository <Arrow /></a></li>}{data.demo && <li><a class="text-link" href={data.demo}>Live demo <Arrow /></a></li>}{data.documentation.map(link=><li><a class="text-link" href={link.url}>{link.label} <Arrow /></a></li>)}</ul></section>}
     <nav class="project-pagination" aria-label="Adjacent projects">{previous && <a href={projectUrl(previous)}><span>Previous project</span><strong>{previous.data.title}</strong></a>}{next && <a class="project-next" href={projectUrl(next)}><span>Next project</span><strong>{next.data.title}</strong></a>}</nav>
-    <a class="text-link project-back" href="/projects/">Back to all projects <Arrow /></a>
+    <a class="text-link project-back" href={withBase('/projects/')}>Back to all projects <Arrow /></a>
     {related.length > 0 && <section class="project-related" aria-labelledby="related-projects-title"><h2 id="related-projects-title">Related projects</h2><div class="archive-grid">{related.map(entry=><ProjectCard project={entry} />)}</div></section>}
   </article>
 </SiteLayout>
