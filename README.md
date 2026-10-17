@@ -1,6 +1,6 @@
 # The Living Engineering Notebook
 
-Francesco Trotti's Astro + TypeScript engineering portfolio. **Phase 3 adds an interactive Three.js robotic linkage to the approved notebook foundation.** Later page recomposition and scroll/background choreography remain deferred. No accounts, tracking, external font requests, or backend are required.
+Francesco Trotti's Astro + TypeScript engineering portfolio. **Phase 3 adds an interactive Three.js robotic linkage and a project archive.** Later page recomposition and scroll/background choreography remain deferred. No accounts, tracking, external font requests, or backend are required.
 
 ## Run
 

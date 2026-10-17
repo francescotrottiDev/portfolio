@@ -1,0 +1,11 @@
+---
+import { Image, Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { src: ImageMetadata; alt: string; caption?: string; eager?: boolean; }
+const { src, alt, caption, eager = false } = Astro.props;
+const widths = [...new Set([480,800,1200,1600,src.width].filter(width => width <= src.width))];
+---
+<figure class="project-figure">
+  {src.format === 'svg' ? <Image src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" /> : <Picture src={src} alt={alt} formats={['avif','webp']} widths={widths} sizes="(max-width: 700px) 90vw, (max-width: 1200px) 85vw, 1200px" loading={eager ? 'eager' : 'lazy'} decoding="async" />}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

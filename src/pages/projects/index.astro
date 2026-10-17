@@ -1,0 +1,10 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ProjectArchive from '../../components/projects/ProjectArchive.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/projects.css';
+const projects = await getProjects();
+---
+<SiteLayout title="Projects — Francesco Trotti" description="An archive of Francesco Trotti’s engineering projects in robotics, artificial intelligence, embedded systems, and research.">
+  <ProjectArchive projects={projects} />
+</SiteLayout>

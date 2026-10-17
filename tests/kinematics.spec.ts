@@ -1,16 +1,15 @@
 import { expect, test } from '@playwright/test';
-import { LINKAGE, approachPose, constrainPose, degrees, forwardKinematics, inverseKinematics, radians } from '../src/lib/kinematics';
-import { DRAWING_FIELD, mechanismBounds } from '../src/lib/linkage-view';
-
-test('the entire mechanism silhouette has padding across fixture travel in both renderers', () => {
-  for (let shoulder=40; shoulder<=65; shoulder+=.5) for (let elbow=-95; elbow<=-45; elbow+=.5) {
-    const box = mechanismBounds({shoulder:radians(shoulder),elbow:radians(elbow)});
-    expect(box.left).toBeGreaterThanOrEqual(DRAWING_FIELD.x+16);
-    expect(box.right).toBeLessThanOrEqual(DRAWING_FIELD.x+DRAWING_FIELD.width-16);
-    expect(box.top).toBeGreaterThanOrEqual(DRAWING_FIELD.y+16);
-    expect(box.bottom).toBeLessThanOrEqual(DRAWING_FIELD.y+DRAWING_FIELD.height-16);
-  }
-});
+import {
+  LINKAGE,
+  forwardKinematics,
+  inverseKinematics,
+  approachPose,
+  constrainPose,
+  radians,
+  degrees,
+} from '../src/lib/kinematics';
+import { mechanismBounds } from '../src/lib/linkage-view';
+import { DRAWING_FIELD } from '../src/lib/linkage-view';
 
 test('forward kinematics preserves both rigid link lengths across the full fixture range', () => {
   for (let shoulder = 40; shoulder <= 65; shoulder += 1) {
@@ -74,4 +73,14 @@ test('non-finite inputs are rejected and extreme joint inputs cannot exceed trav
   expect(() => inverseKinematics({x:0,y:Infinity})).toThrow(RangeError);
   expect(() => constrainPose({shoulder:Infinity,elbow:0})).toThrow(RangeError);
   expect(constrainPose({shoulder:1000,elbow:-1000})).toEqual({shoulder:LINKAGE.shoulder.max,elbow:LINKAGE.elbow.min});
+});
+
+test('the entire mechanism silhouette has padding across fixture travel in both renderers', () => {
+  for (let shoulder=40; shoulder<=65; shoulder+=.5) for (let elbow=-95; elbow<=-45; elbow+=.5) {
+    const box = mechanismBounds({shoulder:radians(shoulder),elbow:radians(elbow)});
+    expect(box.left).toBeGreaterThanOrEqual(DRAWING_FIELD.x+16);
+    expect(box.right).toBeLessThanOrEqual(DRAWING_FIELD.x+DRAWING_FIELD.width-16);
+    expect(box.top).toBeGreaterThanOrEqual(DRAWING_FIELD.y+16);
+    expect(box.bottom).toBeLessThanOrEqual(DRAWING_FIELD.y+DRAWING_FIELD.height-16);
+  }
 });

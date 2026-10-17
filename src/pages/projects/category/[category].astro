@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import ProjectArchive from '../../../components/projects/ProjectArchive.astro';
+import { getProjects } from '../../../lib/projects';
+import { categoryKey, type Project } from '../../../lib/project-utils';
+import '../../../styles/projects.css';
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return [...new Set(projects.map(project=>project.data.category))].map(category=>({params:{category:categoryKey(category)},props:{projects,category}}));
+}
+interface Props { projects: Project[]; category:string; }
+const { projects, category } = Astro.props;
+---
+<SiteLayout title={`${category} projects — Francesco Trotti`} description={`Browse ${category.toLowerCase()} entries in Francesco Trotti’s engineering project archive.`}>
+  <ProjectArchive projects={projects} activeCategory={category} />
+</SiteLayout>

@@ -1,0 +1,19 @@
+---
+import { Image, Picture } from 'astro:assets';
+import ProjectArt from '../ProjectArt.astro';
+import type { Project } from '../../lib/project-utils';
+interface Props { project: Project; eager?: boolean; }
+const { project, eager = false } = Astro.props;
+const { cover, illustration, placeholder } = project.data;
+const widths = cover ? [...new Set([480,800,1200,1600,cover.image.width].filter(width=>width<=cover.image.width))] : [];
+---
+{cover ? <>
+  {cover.image.format === 'svg' ? <Image class="project-cover-image" src={cover.image} alt={cover.alt} loading={eager ? 'eager' : 'lazy'} decoding="async" /> : <Picture class="project-cover-image" src={cover.image} alt={cover.alt} formats={['avif','webp']} widths={widths} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" loading={eager ? 'eager' : 'lazy'} decoding="async" />}
+</> : illustration ? <><ProjectArt kind={illustration} /><span class="art-caption">Illustrative study — not project imagery</span></> : <div class="project-media-empty"><span>Project image not added</span><span>Media can be added to this entry.</span></div>}
+{placeholder && <span class="placeholder-tag">Project placeholder</span>}
+<style is:global>
+  .project-art .project-cover-image, .detail-cover .project-cover-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .project-art .project-cover-image img, .detail-cover .project-cover-image img { width: 100%; height: 100%; object-fit: inherit; }
+  .project-media-empty { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; padding: 25px; text-align: center; color: var(--muted); font-size: 14px; }
+  .project-media-empty span:last-child { font-size: 12px; }
+</style>

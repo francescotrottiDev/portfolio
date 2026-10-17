@@ -1,0 +1,25 @@
+---
+import Arrow from '../Arrow.astro';
+import ProjectMedia from './ProjectMedia.astro';
+import { projectUrl, projectYear, type Project } from '../../lib/project-utils';
+interface Props { project: Project; mode?: 'home' | 'archive'; featured?: boolean; }
+const { project, mode = 'archive', featured = false } = Astro.props;
+const data = project.data;
+const titleId = `project-title-${data.slug}`;
+---
+<article class:list={[mode === 'home' ? 'project' : 'archive-project', { 'project-featured': mode === 'home' && featured }]} id={`project-${data.slug}`}>
+  <div class="project-art"><ProjectMedia project={project} /></div>
+  <div class="project-body">
+    <h3 id={titleId}><a class="project-title-link" href={projectUrl(project)}>{data.title}{mode === 'archive' && <Arrow />}</a></h3>
+    <p>{data.description}</p>
+    <span class="discipline">{data.category}{projectYear(project) && <> / {projectYear(project)}</>}{!data.placeholder && <> / {data.status}</>}</span>
+    {mode === 'home' && data.placeholderNote && <details><summary>What will go here <span class="details-plus" aria-hidden="true"></span></summary><div class="project-details"><p>{data.placeholderNote}</p>{data.placeholder && <p>No project has been published in this slot yet.</p>}</div></details>}
+    {mode === 'archive' && data.technologies.length > 0 && <p class="archive-technologies">{data.technologies.slice(0,4).join(' / ')}</p>}
+  </div>
+</article>
+<style>
+  article { position: relative; }
+  .project-title-link::after { content: ''; position: absolute; inset: 0; }
+  .project-title-link:hover { color: var(--accent); }
+  details { position: relative; z-index: 1; }
+</style>

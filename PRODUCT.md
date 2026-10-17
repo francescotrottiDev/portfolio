@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Astro with TypeScript and static output. A small controller runs analytical planar kinematics and the SVG fallback; Three.js loads near the viewport for the dimensional linkage. Rendering is on demand, not a continuous animation loop. Deployment target remains undecided.
+Astro with TypeScript and static output, using Astro Content Collections for project content. A small controller runs analytical planar kinematics and the SVG fallback; Three.js loads near the viewport for the dimensional linkage. Rendering is on demand, not a continuous animation loop. Deployment target remains undecided.
 
 ## Users
 
@@ -39,8 +39,9 @@ T labs aims to build robotic and AI technology to help the world. This is an amb
 - The user wants a Tony Stark-like character: inventor, scientist, engineer, building to serve the world. This is a character reference, not permission to use movie assets or claim fictional capabilities.
 - Replacement approved direction: The Living Engineering Notebook. Very dark neutral charcoal, an integrated continuous white dotted field, heavy typography, experimental asymmetry, and meaningful engineering annotation. The user rejected the earlier workshop identity as too generic.
 - The user approved the Phase 1–2 visual foundation, then explicitly authorized Phase 3: an interactive Three.js robotic linkage with real fixed-link kinematics and smooth, accessible input. Existing project content and navigation must remain. Later page recomposition and animation phases are not authorized by this increment.
-- The user requested more visible background dots. Keep the registered field continuous and static; do not conflate greater contrast with adding background animation.
-- The mechanism is an illustrative joint-limited planar kinematics study, not a real hardware project or a dynamics/collision simulator. No fake telemetry or arbitrary physical-unit measurements.
+- The user requested more visible background dots. The field remains continuous and static; do not conflate greater contrast with adding background animation.
+- Project metadata lives in `src/content/projects/*.md/.mdx`; `slug` is the unique entry ID, `category` drives filters, `featured` drives homepage selection, and `placeholder` flags reserved slots. Entries with `status: Placeholder` are not evidence of completed work.
+- The mechanism is an illustrative joint-limited planar kinematics study, not a real hardware project or a dynamics/collision simulator. No fake telemetry or arbitrary physical-unit measurements. Project metadata is not evidence of shipped work unless explicitly stated as real in the entry.
 
 ## Evidence on Hand
 

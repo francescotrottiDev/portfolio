@@ -1,7 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { mkdir } from 'node:fs/promises';
-import { portfolio } from '../src/data/portfolio';
+import { readFile } from 'node:fs';
+import { join } from 'node:path';
 import { LINKAGE, forwardKinematics } from '../src/lib/kinematics';
 import { DRAWING_FIELD, LINKAGE_BASE } from '../src/lib/linkage-view';
 
@@ -14,6 +15,37 @@ const setAngle = async (page: Page, id: string, value: string) => {
     input.dispatchEvent(new Event('input', { bubbles:true }));
   }, value);
 };
+
+// Read project frontmatter directly from MDX files (no astro:content protocol in Node).
+const projectsDir = join(new URL('../src/content/projects', import.meta.url).pathname);
+const slugs = ['robotics', 'ai', 'embedded'];
+const projects = await Promise.all(slugs.map(async slug => {
+  const content = await new Promise<string>((resolve, reject) => {
+    readFile(join(projectsDir, `${slug}.md`), 'utf8', (err, data) => err ? reject(err) : resolve(data));
+  });
+  const frontmatter = content.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? '';
+  const parseField = (name: string) => {
+    const match = frontmatter.match(new RegExp(`^${name}:(.*)$`, 'm'));
+    if (!match) return undefined;
+    let value = match[1].trim();
+    // Strip surrounding quotes from YAML-quoted strings.
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    return value;
+  };
+  const featuredStr = parseField('featured');
+  return {
+    id: slug,
+    slug,
+    title: parseField('title') ?? '',
+    description: parseField('description') ?? '',
+    category: parseField('category') ?? '',
+    featured: featuredStr === 'true',
+    placeholder: parseField('placeholder') === 'true',
+    url: `/projects/${slug}/`,
+  };
+}));
 
 test('the linkage initializes a real Three.js canvas without runtime errors', async ({ page }) => {
   const errors: string[] = [];
@@ -179,11 +211,10 @@ test('project content and navigation destinations are preserved', async ({ page 
   await expect(page.getByRole('link', {name:'Francesco Trotti — home'})).toBeVisible();
   await expect(page).toHaveTitle(/Francesco Trotti/);
   expect(await page.locator('nav a').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(['#work', '#approach', '#tlabs', '#about']);
-  for (const project of portfolio.projects) {
-    const article = page.locator(`#project-${project.id}`);
-    await expect(article.locator('h3')).toHaveText(project.title);
-    await expect(article).toContainText(project.description);
-    await expect(article).toContainText('Project placeholder');
+  const featured = projects.filter(project => project.featured);
+  for (const project of featured) {
+    const link = page.getByRole('link', { name: project.title });
+    await expect(link).toHaveAttribute('href', project.url);
   }
 });
 
@@ -260,5 +291,83 @@ test('capture desktop and mobile review evidence', async ({ page }) => {
     await page.locator('canvas').evaluate(canvas => canvas.dispatchEvent(new Event('webglcontextlost', {cancelable:true})));
     await expect(page.locator('#linkage-experiment')).toHaveAttribute('data-renderer', 'svg');
     await page.screenshot({ path: `.impeccable/review/linkage-limit-svg-${name}.png`, fullPage: true });
+  }
+});
+
+/* --- New project system tests --- */
+
+test('projects gallery renders all published entries with navigation', async ({ page }) => {
+  await page.goto('/projects/');
+  await expect(page.getByRole('heading', { name: 'Projects' })).toBeVisible();
+  await expect(page.locator('[data-project-count]')).toBeVisible();
+  for (const project of projects) {
+    await expect(page.getByRole('link', { name: project.title })).toBeVisible();
+  }
+  await expect(page.getByRole('link', { name: 'Back to top' })).toBeVisible();
+});
+
+test('projects gallery category filters work', async ({ page }) => {
+  await page.goto('/projects/');
+  const category = projects[0].category;
+  await page.getByRole('link', { name: category }).click();
+  const key = category.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  await expect(page).toHaveURL(`/projects/category/${key}/`);
+  for (const project of projects.filter(p => p.category === category)) {
+    await expect(page.getByRole('link', { name: project.title })).toBeVisible();
+  }
+});
+
+test('each project has a working detail page', async ({ page }) => {
+  for (const project of projects) {
+    await page.goto(project.url);
+    await expect(page.getByRole('heading', { name: project.title })).toBeVisible();
+    await expect(page.getByText(project.description)).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Back to all projects' })).toBeVisible();
+  }
+});
+
+test('project detail pages have SEO metadata', async ({ page }) => {
+  await page.goto(projects[0].url);
+  await expect(page).toHaveTitle(new RegExp(projects[0].title));
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', projects[0].description);
+});
+
+test('project detail navigation works', async ({ page }) => {
+  await page.goto('/projects/');
+  const first = projects[0];
+  await page.getByRole('link', { name: first.title }).click();
+  await expect(page.getByRole('link', { name: 'Back to all projects' })).toBeVisible();
+  if (projects.length > 1) {
+    const second = projects[1];
+    await page.getByRole('link', { name: 'Back to all projects' }).click();
+    await page.getByRole('link', { name: second.title }).click();
+  }
+});
+
+test('project detail pages pass accessibility checks', async ({ page }) => {
+  await page.goto(projects[0].url);
+  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test('capture project gallery and detail review evidence', async ({ page }) => {
+  await mkdir('.impeccable/review', { recursive: true });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/projects/');
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: '.impeccable/review/projects-gallery-desktop.png', fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/projects/');
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: '.impeccable/review/projects-gallery-mobile.png', fullPage: true });
+  if (projects.length > 0) {
+    await page.goto(projects[0].url);
+    await page.evaluate(() => document.fonts.ready);
+    await page.screenshot({ path: `.impeccable/review/project-detail-${projects[0].slug}-desktop.png`, fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(projects[0].url);
+    await page.evaluate(() => document.fonts.ready);
+    await page.screenshot({ path: `.impeccable/review/project-detail-${projects[0].slug}-mobile.png`, fullPage: true });
   }
 });

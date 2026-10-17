@@ -1,0 +1,14 @@
+---
+import Arrow from './Arrow.astro';
+import { portfolio } from '../data/portfolio';
+interface Props { home?: boolean; }
+const { home = false } = Astro.props;
+const prefix = home ? '' : '/';
+---
+<header class="site-header">
+  <a class="brand" href={home ? '#' : '/'} aria-label={`${portfolio.name} — home`}>
+    <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M3 12V3h9m10 0h9v9m0 10v9h-9m-10 0H3v-9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 21 6-10 6 10m-10-3h8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    <span>{portfolio.name}</span>
+  </a>
+  <nav aria-label="Main navigation"><a href={home ? '#work' : '/projects/'} aria-current={!home && Astro.url.pathname === '/projects/' ? 'page' : undefined}>Work</a><a href={`${prefix}#approach`}>Approach</a><a href={`${prefix}#tlabs`}>T labs <span class="nav-dot" aria-hidden="true"></span></a><a href={`${prefix}#about`}>About <Arrow /></a></nav>
+</header>
